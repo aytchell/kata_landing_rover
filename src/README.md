@@ -4,6 +4,9 @@
 
 Just for fun, we sometimes do code Katas. This time, it's "Landing Rover".
 
+(This description is taken from https://github.com/lysium/kata-landing-rover
+/ It is licensed under the MIT license by lysium)
+
 # Task
 ## Description
 You're part of an exploration team. Your team is sending Landing Rovers on planets. These Landing Rovers are remotely controlled vehicles used to explore the surface of the planet.
@@ -42,7 +45,7 @@ planet 10x10
 
 ## Good to know
 
-- Planets are spheres, so there are no left/right or top/bottom boundaries
+- Planets are torus-shaped, so there are no left/right or top/bottom boundaries (so if you leave the map in north/south direction you re-enter it in the same column; when leaving the map in east/west direction you re-enter in the same row)
 - a `.` is a free surface, where the Landing Rover can land or drive on
 - a `x` is a obstacle, which can't crossed by the Landing Rover
 - one character is one moving unit (for command MF/MB)
@@ -60,13 +63,13 @@ Create a text file, where you visualize the path of the Landing Rover for a give
 
 # My solution
 
-- In Perl, for the giggles.
-- Usage: rover.pl x y direction command_file planet_file [planet_trace_file]
+I took over the command line syntax of lysium's program:
+
+- Usage: rover x y direction command_file planet_file [planet_trace_file]
 - Output:
   - DONE x y direction  --or--
   - OBSTACLE x y direction (exit code 1)
 - planet_trace_file is name of file where we output planet with trace.
-- There's a debug flag at the beginning of the file.
 - Coordinates for user:
   - top, left is 0,0
   - left <-> right is x-direction
