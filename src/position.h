@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ostream>
+#include <tuple>
 
 namespace rover
 {
@@ -32,6 +33,23 @@ namespace rover
         unsigned long y;
         Direction dir;
     };
+
+    typedef std::tuple<rover::Status, rover::Pose> StatusAndPose;
+
+    inline StatusAndPose wrecked_at(const Pose& pose)
+    {
+        return std::make_tuple(Status::Wrecked, pose);
+    }
+
+    inline StatusAndPose alive_at(const Pose& pose)
+    {
+        return std::make_tuple(Status::Alive, pose);
+    }
+
+    inline StatusAndPose alive_at(unsigned int x, unsigned int y, Direction dir)
+    {
+        return std::make_tuple(Status::Alive, Pose{x, y, dir});
+    }
 
     Movement convert_movement(const std::string& m);
     Direction left(const Direction& old);

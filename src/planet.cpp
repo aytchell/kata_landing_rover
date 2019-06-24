@@ -58,25 +58,22 @@ void rover::Planet::print_map(
     }
 }
 
-std::tuple<rover::Status, rover::Pose> rover::Planet::move(
-        const std::tuple<Status, Pose>& context,
-        Movement cmd) const
+rover::StatusAndPose rover::Planet::move(
+        const StatusAndPose& snp, Movement cmd) const
 {
-    if (std::get<0>(context) == Status::Wrecked)
-        return context;
+    if (std::get<0>(snp) == Status::Wrecked)
+        return snp;
 
-    const Pose& old_pose = std::get<1>(context);
+    const Pose& old_pose = std::get<1>(snp);
     const Pose& new_pose = move(old_pose, cmd);
 
     if (has_obstacle(new_pose.x, new_pose.y))
     {
-        std::tuple<rover::Status, rover::Pose> new_context =
-            std::make_tuple(Status::Wrecked, old_pose);
+        StatusAndPose new_context = wrecked_at(old_pose);
         return new_context;
     }
 
-    std::tuple<rover::Status, rover::Pose> new_context =
-        std::make_tuple(Status::Alive, new_pose);
+    StatusAndPose new_context = alive_at(new_pose);
     return new_context;
 }
 

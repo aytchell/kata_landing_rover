@@ -27,7 +27,7 @@ void assert_argc(int argc, char* argv[], int num, const char* msg)
     }
 }
 
-std::tuple<rover::Status, rover::Pose> read_rover(int argc, char* argv[])
+rover::StatusAndPose read_rover(int argc, char* argv[])
 {
     unsigned long x, y;
 
@@ -71,9 +71,8 @@ std::tuple<rover::Status, rover::Pose> read_rover(int argc, char* argv[])
                 "DIRECTION has to be one of 'N', 'E', 'S' or 'W'");
     }
 
-    std::tuple<rover::Status, rover::Pose> rover =
-        std::make_tuple( rover::Status::Alive, rover::Pose{x, y, enum_dir});
-    return rover;
+    rover::StatusAndPose snp = alive_at(x, y, enum_dir);
+    return snp;
 }
 
 std::list<rover::Movement> read_commands(int argc, char* argv[])

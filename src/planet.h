@@ -1,7 +1,6 @@
 #pragma once
 
 #include "position.h"
-#include <tuple>
 #include <iostream>
 #include <vector>
 
@@ -14,9 +13,8 @@ namespace rover
 
             void print_map(std::ostream& out, const std::string& indent) const;
 
-            std::tuple<Status, Pose> move(
-                    const std::tuple<Status, Pose>& context,
-                    Movement cmd) const;
+            StatusAndPose move(
+                    const StatusAndPose& snp, Movement cmd) const;
 
         private:
             Pose move_fwd(const Pose& old_pose) const;
