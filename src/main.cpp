@@ -27,9 +27,11 @@ int main(int argc, char* argv[])
         }
 
         print_rover(rover);
+        return (std::get<0>(rover) == rover::Status::Alive) ? 0 : 1;
     }
     catch (std::exception& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
+        return 2;
     }
 }
