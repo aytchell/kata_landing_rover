@@ -103,3 +103,11 @@ rover::Planet read_planet(int argc, char* argv[])
 
     return planet;
 }
+
+std::string read_outfile(int argc, char* argv[])
+{
+    if (argc < 7) return "";
+
+    std::string filename(argv[6]);
+    return filename;
+}
