@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
         std::cout << "Read this planet map:\n";
         printer.set_start_field(snp);
-        printer.print(std::cout);
+        printer.print(std::cout, "   ");
 
         for (auto c : cmds)
         {
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
         printer.set_end_field(snp);
 
         std::cout << "Final map:\n";
-        printer.print(std::cout);
+        printer.print(std::cout, "  ");
 
         print_rover(snp);
         return (std::get<0>(snp) == rover::Status::Alive) ? 0 : 1;

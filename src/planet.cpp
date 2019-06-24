@@ -21,8 +21,7 @@ rover::Planet::Planet(std::istream& in)
     for (std::string line; ! std::getline(in, line).eof(); )
     {
         assert_eq_or_set(num_cols, line.length());
-        m_fields.push_back(std::vector<FieldContent>());
-        std::vector<FieldContent>& row = *m_fields.rbegin();
+        std::vector<FieldContent> row;
 
         for (char field : line)
         {
@@ -34,28 +33,22 @@ rover::Planet::Planet(std::istream& in)
                                  "Illegal character found in planet map");
             }
         }
+
+        m_fields.push_back(std::move(row));
     }
 
     if (m_fields.size() != num_cols)
         throw std::invalid_argument("#Cols and #Rows differ in planet map");
 }
 
-void rover::Planet::print_map(
-        std::ostream& out, const std::string& indent) const
+size_t  rover::Planet::side_length() const
 {
-    for (const auto& row : m_fields)
-    {
-        out << indent;
-        for (FieldContent content : row)
-        {
-            switch (content)
-            {
-                case FieldContent::Free: out << '.'; break;
-                case FieldContent::Obstacle: out << 'x'; break;
-            }
-        }
-        out << '\n';
-    }
+    return m_fields.size();
+}
+
+bool rover::Planet::has_obstacle(unsigned long x, unsigned long y) const
+{
+    return m_fields[y][x] == FieldContent::Obstacle;
 }
 
 rover::StatusAndPose rover::Planet::move(
@@ -153,9 +146,4 @@ rover::Pose rover::Planet::move(const Pose& old_pose, Movement cmd) const
     }
 
     throw std::invalid_argument("Invalid movement given");
-}
-
-bool rover::Planet::has_obstacle(unsigned long x, unsigned long y) const
-{
-    return m_fields[y][x] == FieldContent::Obstacle;
 }

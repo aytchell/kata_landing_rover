@@ -17,7 +17,7 @@ namespace rover
             void add_visited_field(const StatusAndPose& snp);
             void set_end_field(const StatusAndPose& snp);
 
-            void print(std::ostream& out) const;
+            void print(std::ostream& out, const std::string& indent) const;
 
         private:
             enum class MapCellInfo
